@@ -57,4 +57,15 @@ public class User {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "chatId=" + chatId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", timestamp=" + timestamp +
+                '}';
+    }
 }
