@@ -1,5 +1,6 @@
 package io.proj3ct.OSI_Mars_Bot.service;
 
+import com.vdurmont.emoji.EmojiParser;
 import io.proj3ct.OSI_Mars_Bot.config.BotConfig;
 import io.proj3ct.OSI_Mars_Bot.model.User;
 import io.proj3ct.OSI_Mars_Bot.model.UserRepository;
@@ -102,9 +103,10 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     private void startCommandReceived(long chatId, String name) {
-        String answer = "Здравствуйте уважаемый(ая) " + name + "."
+        String answer = EmojiParser.parseToUnicode(
+        "Здравствуйте уважаемый(ая) " + name + "."
                 + " Это специальный бот предназначенный для жителей ЖК МАРС." +
-                " Здесь Вы можете задавать свои вопросы.";
+                " Здесь Вы можете задавать свои вопросы." + " :blush:");
 
         log.info("Replied to user: " + name);
         sendMessage(chatId, answer);
