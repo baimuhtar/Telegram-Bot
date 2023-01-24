@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.sql.Timestamp;
 
+// Создаем класс пользователя для его идентификации
 @Entity(name="usersDataTable")
 public class User {
     @Id

@@ -10,6 +10,8 @@ import javax.validation.Valid;
 @Data
 @Configuration
 @PropertySource("application.properties")
+
+// Вписываем название для нашего бота и его токен
 public class BotConfig {
     @Value("${bot.name}")
     String botName;
