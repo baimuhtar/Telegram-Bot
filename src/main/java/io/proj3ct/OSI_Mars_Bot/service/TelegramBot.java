@@ -2,10 +2,13 @@ package io.proj3ct.OSI_Mars_Bot.service;
 
 import com.vdurmont.emoji.EmojiParser;
 import io.proj3ct.OSI_Mars_Bot.config.BotConfig;
+import io.proj3ct.OSI_Mars_Bot.model.Ads;
+import io.proj3ct.OSI_Mars_Bot.model.AdsRepository;
 import io.proj3ct.OSI_Mars_Bot.model.User;
 import io.proj3ct.OSI_Mars_Bot.model.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
@@ -31,6 +34,10 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AdsRepository adsRepository;
+
     final BotConfig config;
 
 
@@ -229,11 +236,24 @@ public class TelegramBot extends TelegramLongPollingBot {
             log.error(ERROR_TEXT + " " + e.getMessage());
         }
     }
+
     private void prepareAndSendMessage(long chatId, String textToSend) {
         SendMessage message = new SendMessage();
         message.setChatId(String.valueOf(chatId));
         message.setText(textToSend);
         executeMessage(message);
     }
-}
 
+    @Scheduled(cron = "${cron.scheduler}")
+    private void sendAds() {
+        var ads = adsRepository.findAll();
+        var users = userRepository.findAll();
+
+        for (Ads ad : ads) {
+            for (User user : users) {
+                prepareAndSendMessage(user.getChatId(), ad.getAd());
+            }
+
+        }
+    }
+}

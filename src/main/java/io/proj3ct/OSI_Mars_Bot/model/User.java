@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import java.sql.Timestamp;
 
 // Создаем класс пользователя для его идентификации
-@Entity(name="usersDataTable")
+@Entity(name = "users_data_table")
 public class User {
     @Id
     private Long chatId;
